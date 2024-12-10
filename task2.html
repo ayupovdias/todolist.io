@@ -1,0 +1,131 @@
+<html>
+<head>
+<style>
+    p{
+        color:white;
+        text-align:center;
+        font-size:30px;
+        font-family:sans-serif;
+        font-weight:bold;
+        margin-top:15px;
+    }
+    body{
+        background-color:cornflowerblue;
+        font-size:18px;
+    }
+img{
+    width:21px;
+    height:21px;
+}
+.text{
+    text-decoration:none;
+
+}
+.deco{
+    text-decoration:line-through;
+
+}
+#div{
+    width:600px;
+    height:600px;
+    margin:30px auto;
+    background-color:white;
+    overflow-y:scroll;
+    border:1px cornflowerblue solid;
+
+}
+input{
+    width:300px;
+}
+#position{
+    margin:12px 120px;
+}
+</style>
+</head>
+<body>
+<p>To-Do List</p>
+<div id="div">
+    <div id="position">
+<input id="input" onchange="insert()"><button onclick="insert()">ADD</button>
+    </div>
+<div id="divka"></div>
+
+</div>
+<script>
+let d=document.getElementById('divka');
+let i=document.getElementById('input');
+function line(event){
+     if(event.target.className==="text"){
+         let sp=event.target;
+         sp.className="deco";
+     }
+     else{
+         let spa=event.target;
+         spa.className='text';
+     }
+}
+function remove(event){
+    let img=event.target;
+    let ok=confirm("Are you sure to delete this text?");
+    if(ok===true){
+         img.parentElement.remove();
+    }
+}
+function edit(event){
+    let a=prompt();
+    if(a!==""){
+        let arr=[];
+        arr=a.split(" ");
+        for(let k=0;k<arr.length;k++){
+            if(arr[k].length>58){
+                alert("Sorry but the word can't contain more than 58 symbols");
+                i.value="";
+                return;
+            }
+        }
+        let text0=event.target.parentElement;
+        let text1=text0.firstElementChild;
+        text1.innerText=a;
+    }
+
+}
+
+function insert() {
+    if (i.value !== "") {
+        let arr=[];
+        arr=i.value.split(" ");
+        for(let k=0;k<arr.length;k++){
+            if(arr[k].length>58){
+                alert("Sorry but the word can't contain more than 58 symbols");
+                i.value="";
+                return;
+            }
+        }
+    let div = document.createElement("div");
+    let img = document.createElement("img");
+    let img0=document.createElement("img");
+    let span = document.createElement("span");
+    let hr=document.createElement("hr");
+    img.src='delete0.png';
+    img.style.float='right';
+    img0.src="edit0.webp";
+    img0.style.float='right';
+    span.innerHTML=i.value;
+    span.className="text";
+    span.addEventListener("dblclick", line);
+    img.addEventListener("click", remove);
+    img0.addEventListener("click",edit);
+    div.appendChild(span);
+    div.appendChild(img);
+    div.appendChild(img0);
+    div.appendChild(hr);
+    div.style.marginLeft='15px';
+    div.style.marginRight='15px';
+    d.appendChild(div);
+    i.value="";
+
+}
+}
+</script>
+</body>
+</html>
